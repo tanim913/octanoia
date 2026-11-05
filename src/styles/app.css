@@ -140,3 +140,8 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 .footer .maker { color: var(--ink); font-weight: 600; text-underline-offset: 0.2em; }
 .footer .maker:hover { color: var(--Ni); }
+
+/* ── Icons in buttons ── */
+.icon { width: 20px; height: 20px; flex: none; }
+.btn-danger { background: transparent; color: var(--bad); border: 1px solid currentColor; }
+.btn-danger:hover { background: color-mix(in srgb, var(--bad) 12%, transparent); }

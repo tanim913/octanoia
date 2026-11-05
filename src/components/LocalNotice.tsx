@@ -1,6 +1,7 @@
 import { exportResults, getResult } from '../lib/storage'
 import { signInWithGoogle } from '../lib/supabase'
 import { useSession } from '../lib/useSession'
+import { GoogleIcon } from './Icons'
 import { AFTER_LOGIN_KEY } from '../features/profile/SaveToProfile'
 
 /**
@@ -28,6 +29,7 @@ export function LocalNotice({ resultId, night = false }: { resultId?: string; ni
               signInWithGoogle()
             }}
           >
+            <GoogleIcon />
             Sign in with Google
           </button>
         )}

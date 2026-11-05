@@ -6,6 +6,7 @@ import { FUNCTIONS, type Fn } from '../../engine/model'
 import { fitTypes } from '../../engine/typeFit'
 import { exportResults, importResults, loadResults, sanitizeResult, saveResult, type StoredResult } from '../../lib/storage'
 import { LocalNotice } from '../../components/LocalNotice'
+import { GoogleIcon, LogOutIcon, TrashIcon } from '../../components/Icons'
 import { tierOf } from '../../data/readings'
 import { NoteForm } from '../../three/Stage'
 import { deleteAccount, deleteRemote, fetchResults, signInWithGoogle, signOut, uploadResult } from '../../lib/supabase'
@@ -25,6 +26,7 @@ export default function ProfilePage() {
   const [remote, setRemote] = useState<StoredResult[]>([])
   const [msg, setMsg] = useState('')
   const nav = useNavigate()
+  const name: string = user?.user_metadata?.full_name ?? user?.email ?? ''
 
   const refresh = useCallback(async () => {
     setLocal(loadResults())
@@ -99,15 +101,20 @@ export default function ProfilePage() {
                       signInWithGoogle().catch((e) => setMsg(e.message))
                     }}
                   >
+                    <GoogleIcon />
                     Sign in with Google
                   </button>
                 </>
               )}
               {user && (
-                <>
-                  <p>
-                    Signed in as <strong>{user.user_metadata?.full_name ?? user.email}</strong>
-                  </p>
+                <div className="account-in">
+                  <div className="account-who">
+                    <span className="avatar" aria-hidden="true">{initials(name)}</span>
+                    <div>
+                      <p className="account-name">{name}</p>
+                      <p className="small muted account-mail">Signed in · {user.email}</p>
+                    </div>
+                  </div>
                   {unsynced.length > 0 && (
                     <button
                       type="button"
@@ -125,27 +132,31 @@ export default function ProfilePage() {
                       Save {unsynced.length} result{unsynced.length > 1 ? 's' : ''} from this device
                     </button>
                   )}
-                  <button type="button" className="link small" onClick={() => signOut().then(refresh)}>
-                    Sign out
-                  </button>
-                  <button
-                    type="button"
-                    className="link small"
-                    onClick={async () => {
-                      if (!confirm('Delete your account and every result saved to it? Results kept on this device stay here. This can’t be undone.')) return
-                      try {
-                        await deleteAccount()
-                        for (const r of loadResults()) if (r.remoteId) saveResult({ ...r, remoteId: undefined })
-                        setMsg('Your account and saved results are deleted.')
-                        refresh()
-                      } catch (e) {
-                        setMsg((e as Error).message)
-                      }
-                    }}
-                  >
-                    Delete account
-                  </button>
-                </>
+                  <div className="account-actions">
+                    <button type="button" className="btn btn-quiet" onClick={() => signOut().then(refresh)}>
+                      <LogOutIcon />
+                      Sign out
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={async () => {
+                        if (!confirm('Delete your account and every result saved to it? Results kept on this device stay here. This can’t be undone.')) return
+                        try {
+                          await deleteAccount()
+                          for (const r of loadResults()) if (r.remoteId) saveResult({ ...r, remoteId: undefined })
+                          setMsg('Your account and saved results are deleted.')
+                          refresh()
+                        } catch (e) {
+                          setMsg((e as Error).message)
+                        }
+                      }}
+                    >
+                      <TrashIcon />
+                      Delete account
+                    </button>
+                  </div>
+                </div>
               )}
               {msg && <p className="small">{msg}</p>}
             </div>
@@ -312,6 +323,8 @@ export default function ProfilePage() {
     </div>
   )
 }
+
+const initials = (n: string) => (n.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('') || '?').toUpperCase()
 
 function getLocal(id: string) {
   return loadResults().find((r) => r.id === id)

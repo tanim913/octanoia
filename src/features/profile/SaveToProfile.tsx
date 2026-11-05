@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { getResult, saveResult } from '../../lib/storage'
 import { signInWithGoogle, uploadResult } from '../../lib/supabase'
 import { useSession } from '../../lib/useSession'
+import { GoogleIcon } from '../../components/Icons'
 
 export const AFTER_LOGIN_KEY = 'octanoia.afterLogin'
 
@@ -28,6 +29,7 @@ export function SaveToProfile({ resultId }: { resultId: string }) {
           signInWithGoogle().catch((e) => setErr(String(e.message ?? e)))
         }}
       >
+        <GoogleIcon />
         Sign in with Google to save
       </button>
     )

@@ -1,6 +1,15 @@
 .profile { padding-block: clamp(40px, 8vh, 96px) 0; display: grid; gap: var(--gap-section); }
 .profile-head { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; }
 .account { display: grid; gap: 16px; justify-items: start; }
+.account-in { justify-self: stretch; display: grid; gap: 20px; justify-items: start; }
+.account-who { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.avatar {
+  display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink); color: var(--bg); font-weight: 600; letter-spacing: 0.02em;
+}
+.account-name { margin: 0; font-family: var(--serif); font-size: 1.5rem; line-height: 1.15; overflow-wrap: anywhere; }
+.account-mail { margin: 2px 0 0; overflow-wrap: anywhere; }
+.account-actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 16px; border-top: 1px solid var(--surface-2); width: 100%; }
 .profile-empty { display: grid; gap: 24px; justify-items: start; max-width: 40ch; }
 .reflection { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(32px, 5vw, 80px); align-items: start; }
 .reflection > div { display: grid; gap: 20px; }
@@ -45,3 +54,5 @@
 .file-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .file-btn:focus-within { outline: 3px solid var(--Ne); outline-offset: 3px; }
 @media (max-width: 600px) { .refl-forms { grid-template-columns: 1fr 1fr; } }
+.account-actions .btn-quiet { background: var(--surface-2); }
+.account-actions .btn-quiet:hover { background: var(--band); }
