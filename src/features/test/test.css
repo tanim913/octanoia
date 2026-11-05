@@ -1,0 +1,45 @@
+.test { min-height: 100svh; display: flex; flex-direction: column; }
+.test > * { width: 100%; }
+.test-bar { display: flex; justify-content: space-between; align-items: center; padding-block: 18px; gap: 16px; }
+.test-meta { display: flex; gap: 24px; align-items: center; color: var(--muted); }
+.test-progress { height: 4px; background: var(--surface); }
+.test-progress span { display: block; height: 100%; background: var(--ink); transition: width 400ms var(--ease-out); }
+
+.test-grid {
+  flex: 1; width: 100%; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 5vw, 80px); padding-block: clamp(32px, 6vh, 72px);
+}
+.test-main { max-width: 680px; }
+.chapter-head { margin-bottom: 36px; display: grid; gap: 6px; }
+.chapter-head h1 { font-weight: 600; letter-spacing: -0.01em; }
+.test-main .q-text { font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem); line-height: 1.2; max-width: 26ch; margin-bottom: 32px; }
+.test-nav { margin-top: 32px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.keys { margin-left: auto; }
+
+.interlude { display: grid; gap: 20px; max-width: 46ch; }
+.interlude h1 { margin-bottom: 8px; }
+.interlude-p { font-size: var(--step-lead); line-height: 1.4; }
+.interlude-q { margin: 8px 0 16px; padding: 20px 24px; background: var(--surface); border-radius: var(--radius); display: grid; gap: 8px; }
+.interlude-q cite { font-style: normal; }
+.interlude .btn { justify-self: start; }
+
+.test-stage {
+  position: sticky; top: 24px; align-self: start; height: min(76svh, 720px);
+  background: var(--night); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-rows: 1fr auto auto;
+}
+.test-stage .constellation { border-radius: 0; }
+.stage-note { color: var(--night-muted); padding: 0 24px 22px; }
+.chapter-dots { list-style: none; margin: 0; padding: 16px 24px 12px; display: flex; gap: 8px; }
+.chapter-dots li { flex: 1; height: 4px; border-radius: 2px; background: var(--night-2); }
+.chapter-dots li.done { background: var(--night-muted); }
+.chapter-dots li.now { background: var(--night-ink); }
+.test-foot { padding-bottom: 28px; }
+
+@media (max-width: 900px) {
+  .test-grid { grid-template-columns: 1fr; }
+  .test-stage { position: static; height: 200px; order: -1; grid-template-rows: 1fr auto; }
+  .stage-note { display: none; }
+  .likert { grid-template-columns: 1fr; }
+  .likert-opt { flex-direction: row; justify-content: flex-start; gap: 14px; padding: 14px 16px; font-size: 1rem; }
+  .keys { display: none; }
+}
